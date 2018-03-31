@@ -4,6 +4,31 @@
     <div class ="page-header">
       <h1>Vue.js & firebase Sample App</h1>
     </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Add Book</h3>
+      </div>
+      <div class="panel-body">
+        <form id="form" class="form-inline" v-on:submit.prevent="addBook">
+          <div clss="form-group">
+            <label for="bookTitle">Title : </label>
+            <input type="text" id="bookTitle" class="form-control" v-model="newBook.title" />
+          </div>
+          <div clss="form-group">
+            <label for="bookAuthor">Author : </label>
+            <input type="text" id="bookAuthor" class="form-control" v-model="newBook.author" />
+          </div>
+          <div clss="form-group">
+            <label for="bookUrl">url : </label>
+            <input type="text" id="bookUrl" class="form-control" v-model="newBook.url" />
+          </div>
+          <input type="submit" class="btn btn-primary" value="Add Book"/>
+        </form>
+      </div>
+    </div>
+
+
     <div class= "panel panel-default" >
       <div class="panel-heading">
         <h3>BookList</h3>
@@ -27,6 +52,9 @@
               </td>
               <td>
                 {{book.author}}
+              </td>
+              <td>
+                <span class="glyphicon glyphicon-trash" v-on:click="removeBook(book)"></span>
               </td>
             </tr>
 
@@ -55,6 +83,17 @@ export default {
         author: "",
         url : "http://"
       }
+    }
+  },
+  methods:{
+    addBook : function(){
+      bookRef.push(this.newBook)
+      this.newBook.title = '';
+      this.newBook.author = '';
+      this.newBook.url = '';
+    },
+    removeBook: function(){
+      bookRef.child(book['.key']).remove();
     }
   }
 
